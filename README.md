@@ -10,6 +10,7 @@
 
 ## 下载运行
 
+* 下载地址：https://github.com/UncleCatMySelf/MintSells/releases
 * [下载运行文档](doc/use/use1.md)
 * [SQL文档](doc/use/SQL.md)
 
