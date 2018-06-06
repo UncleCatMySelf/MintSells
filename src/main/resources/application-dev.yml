@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1/diancan?characterEncoding=utf-8&useSSL=false
+#打印sql语句，方便开发调试
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 192.168.3.24
+    port: 6379
+server:
+  servlet:
+    context-path: /sb
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: D:/log
+#  file: D:/log/sb.log
+#  level:
+#    com.myself.sbdiancan.LoggerTest: debug
+
+wechat:
+  mpAppId: xxxx
+  mpAppSecret: xxxx
+  openAppId: xxxx
+  openAppSecret: xxx
+  mchId: xxx
+  mchKey: xxx
+  keyPath: /xx/xx/xx
+  notifyUrl: http://xxxx.com/sb/pay/notify
+  templateId:
+    orderStatus: xxx
+
+projecturl:
+  wechatMpAuthorize: http://sb.natapp4.cc
+  wechatOpenAuthorize: http://sb.natapp4.cc
+  sb: http://127.0.0.1:8080
+
+#通过日志级别设置，查看mybatis执行的sql语句
+logging:
+  level:
+    com.myself.sbdiancan.dataobject.mapper: trace
+
+#配置mybatis，mapper文件
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
