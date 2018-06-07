@@ -6,6 +6,9 @@
 
 以下目录的根目录均为：com/myself/sbdiancan/
 
+项目架构图
+![Image text](https://raw.githubusercontent.com/UncleCatMySelf/img-myself/master/img/mintsells/4.png)
+
 ## 针对需求
 
 本项目主要针对微信公众号，小程序为主的应用快速开发商城买卖家管理系统，不包含产品前端，管理界面前端为Bootstrap框架，
@@ -20,6 +23,8 @@
 
 
 ## 登录登出切面开发
+
+![Image text](https://raw.githubusercontent.com/UncleCatMySelf/img-myself/master/img/mintsells/7.png)
 
 对于登录登出，大家只要实现自己自定义的控制层即可，因为aspect/SellerAuthorizeAspect.java中已经
 
@@ -55,6 +60,8 @@ Demo中的数据库是和项目系统没有联系的，大家可以自行选择�
 第一个参数为数据表对应实体类，第二个参数为Id类型，而对应的Service及Controller就大同小异了。
 
 ## 分布式系统设计
+
+![Image text](https://raw.githubusercontent.com/UncleCatMySelf/img-myself/master/img/mintsells/6.png)
 
 这里的分布式系统，是为系统后期的分布式架构做基类，大家可以注意到对于token的存储，我使用了Redis
 
@@ -99,4 +106,30 @@ if ('WebSocket' in window){
     alert('该浏览器不支持WebSocket');
 }
 ```
-而后台的实现也相对简单......还在撰写中
+而后台的实现也相对简单，设置WebSocketConfig，并在WebSocket中创建容器存放链接实例，通过send方法向前端发送信息
+```
+public void sendMessage(String message){
+    for (WebSocket webSocket:webSocketSet){
+        log.info("【WebSocket消息】广播消息，message：{}",message);
+        try {
+            webSocket.session.getBasicRemote().sendText(message);
+        }catch (Exception e){
+            log.info("【WebSocket消息】发送消息发生异常，{}",e.getMessage());
+        }
+    }
+}
+```
+
+## 异常捕获
+
+![Image text](https://raw.githubusercontent.com/UncleCatMySelf/img-myself/master/img/mintsells/5.png)
+
+在exception包中定义不同功能的异常报错类，enums中可以定义对应抛出的错误码还有信息，最后统一由handler捕获，统一返回前端的数据格式。
+
+## 微信特性
+
+配置WechatMpConfig、WechatOpenConfig、WechatPayConfig，分别对应微信公众平台、微信开放平台、微信支付，这里开发者
+
+仅需要修改application中的信息即可，这几个类不用修改。核心支付类，PayServiceImpl中已经详细注释，可以直接使用。
+
+注意：本支付与登录是针对微信公众号的开发，如果需要改为小程序等，需要根据开发文档进行修改。
